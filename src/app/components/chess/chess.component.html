@@ -1,4 +1,21 @@
-<div>
-    <h1>CHESS</h1>
-    <p>Esta pagina esta vacia para el desarrollo.</p>
+<div class="container mt-3">
+  <p class="h4 mb-3">Chess</p>
+  <form [formGroup]="chessForm" (ngSubmit)="handleButtonClick()">
+    <div class="row">
+      <div class="col-12 col-md-6 mb-3">
+        <label for="input" class="form-label">Input:</label>
+        <textarea id="input" class="form-control" formControlName="input" rows="5"></textarea>
+        <div *ngIf="submitted && chessForm.controls['input'].errors?.['required']" class="text-danger mt-1">
+          Input is required
+        </div>
+        <div class="d-flex justify-content-end mt-2">
+          <button type="submit" class="btn btn-primary">Calculate</button>
+        </div>
+      </div>
+      <div class="col-12 col-md-6 mb-3">
+        <label for="output" class="form-label">Output:</label>
+        <pre id="output" class="bg-light p-3">{{ output || 'There is no result' }}</pre>
+      </div>
+    </div>
+  </form>
 </div>

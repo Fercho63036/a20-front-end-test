@@ -1,0 +1,8 @@
+<div>
+  <label [for]="'input-' + id" class="form-label">Input:</label>
+  <textarea [id]="'input-' + id" rows="4" class="form-control" [ngClass]="{'is-invalid': formControl.errors}"
+    [formControl]="formControl"></textarea>
+  <div *ngIf="formControl.errors?.['customError']" class="invalid-feedback">
+    {{ formControl.errors?.['customError'] }}
+  </div>
+</div>

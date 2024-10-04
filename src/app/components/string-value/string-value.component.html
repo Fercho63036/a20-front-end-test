@@ -1,4 +1,15 @@
-<div>
-    <h1>LISTA DE PEDIDOS</h1>
-    <p>Esta pagina esta vacia para el desarrollo.</p>
+<div class="container mt-3">
+  <p class="h4 mb-3">String Value</p>
+  <form [formGroup]="stringForm">
+    <div class="row">
+      <div class="col-12 col-md-6 mb-3">
+        <!-- Ahora usamos inputControl en lugar de hacer el casteo directamente -->
+        <app-input-text-area [id]="'2'" [formControl]="inputControl"></app-input-text-area>
+        <div class="d-flex justify-content-end mt-2">
+          <button type="submit" class="btn btn-primary">Calculate</button>
+        </div>
+      </div>
+      <app-show-result [id]="'2'" [data]="output"></app-show-result>
+    </div>
+  </form>
 </div>
