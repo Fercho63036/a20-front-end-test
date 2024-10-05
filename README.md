@@ -1,7 +1,7 @@
 ######  Proyecto WEB APP - FRONT END ######
 Este es un proyecto de aplicación web desarrollado con Angular. A continuación, se detallan los pasos para instalar y poner en marcha el proyecto.
 
-# Requisitos
+# Requisitos ##
 Node.js >= 20.11.0
 npm >= 10.2.4
 Git
