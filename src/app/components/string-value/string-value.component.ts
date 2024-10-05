@@ -27,7 +27,7 @@ export class StringValueComponent {
     const inputData = inputControl?.value;
 
     if (isStringValueValid(inputData, this.stringForm)) {
-      this.apiService.getMaximunValueFunction({ input: inputData }).subscribe(
+      this.apiService.getMaximumValueFunction({ input: inputData }).subscribe(
         (result) => {
           this.output = result.data;
         },
