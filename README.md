@@ -10,8 +10,8 @@ Git
 # 1.- **Clonar el repositorio**
 
     ```bash
-git clone https://github.com/Fercho63036/a20-front-end-test.git
-cd web-app-front-end
+    git clone https://github.com/Fercho63036/a20-front-end-test.git
+    cd a20-front-end-test
     ```
 
 
@@ -19,7 +19,7 @@ cd web-app-front-end
 Ejecuta el siguiente comando para instalar todas las dependencias del proyecto:
 
     ```bash
-npm install
+    npm install
     ```
 
 # 3. **Levantar el servidor de desarrollo**
