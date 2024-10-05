@@ -1,8 +1,29 @@
-<div>
+<div *ngIf="formGroup" [formGroup]="formGroup">
   <label [for]="'input-' + id" class="form-label">Input:</label>
-  <textarea [id]="'input-' + id" rows="4" class="form-control" [ngClass]="{'is-invalid': formControl.errors}"
-    [formControl]="formControl"></textarea>
-  <div *ngIf="formControl.errors?.['customError']" class="invalid-feedback">
-    {{ formControl.errors?.['customError'] }}
+  <textarea
+    [id]="'input-' + id"
+    rows="4"
+    class="form-control"
+    formControlName="input"
+    [ngClass]="{ 'is-invalid': isInvalid }"
+    (blur)="onBlur()"
+  ></textarea>
+  <div *ngIf="isInvalid" class="invalid-feedback">
+    {{ errorMessage }}
+  </div>
+</div>
+
+<div *ngIf="formControl && !formGroup">
+  <label [for]="'input-' + id" class="form-label">Input:</label>
+  <textarea
+    [id]="'input-' + id"
+    rows="4"
+    class="form-control"
+    [formControl]="formControl"
+    [ngClass]="{ 'is-invalid': isInvalid }"
+    (blur)="onBlur()"
+  ></textarea>
+  <div *ngIf="isInvalid" class="invalid-feedback">
+    {{ errorMessage }}
   </div>
 </div>

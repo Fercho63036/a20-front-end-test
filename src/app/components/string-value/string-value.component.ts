@@ -1,47 +1,41 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { ApiService } from '../../services/api.service';
-import { isStringValueValid } from '../../utils/validations-utils';
+import { isStringValueValid } from 'src/app/utils/data.service';
 
 @Component({
   selector: 'app-string-value',
-  templateUrl: './string-value.component.html'
+  templateUrl: './string-value.component.html',
+  styleUrls: ['./string-value.component.scss']
 })
+
 export class StringValueComponent {
   stringForm: FormGroup;
   output: string = '';
-  submitted: boolean = false;
 
   constructor(private fb: FormBuilder, private apiService: ApiService) {
     this.stringForm = this.fb.group({
-      input: ['', Validators.required]
+      input: ['', Validators.required],
     });
   }
 
-  async handleButtonClick(): Promise<void> {
-    this.submitted = true;
+  onSubmit() {
+    const inputControl = this.stringForm.get('input');
+    inputControl?.markAsTouched(); 
 
-    if (this.stringForm.invalid) {
-      return;
-    }
+    const inputData = inputControl?.value;
 
-    const inputData = this.stringForm.value;
-    if (isStringValueValid(inputData.input, this.setError.bind(this), this.clearError.bind(this))) {
-      const result = await this.apiService.getMaximunValueFunction(inputData);
-      this.output = result.data;
+    if (isStringValueValid(inputData, this.stringForm)) {
+      this.apiService.getMaximunValueFunction({ input: inputData }).subscribe(
+        (result) => {
+          this.output = result.data;
+        },
+        (error) => {
+          console.error('Error fetching data:', error);
+          this.output = 'Error fetching result';
+        }
+      );
     }
   }
-
-  setError(message: string): void {
-    this.stringForm.controls['input'].setErrors({ customError: message });
-  }
-
-  clearError(): void {
-    this.stringForm.controls['input'].setErrors(null);
-  }
-
-    // Método para obtener el FormControl casteado desde AbstractControl
-    get inputControl(): FormControl {
-      return this.stringForm.get('input') as FormControl;
-    }
 }

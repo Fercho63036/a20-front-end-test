@@ -1,53 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ApiService  } from 'src/app/services/api.service';
-import { separateChessData } from 'src/app/utils/data-utils';
-import { isChessDataValid } from 'src/app/utils/validations-utils';
+import { ApiService } from '../../services/api.service';
+import { isChessDataValid, separateChessData } from 'src/app/utils/data.service';
 
 @Component({
   selector: 'app-chess',
   templateUrl: './chess.component.html',
+  styleUrls: ['./chess.component.scss']
 })
-export class ChessComponent implements OnInit {
+export class ChessComponent {
   chessForm: FormGroup;
-
-  submitted: boolean = false;
-
   output: string = '';
 
-  constructor(
-    private fb: FormBuilder,
-    private services: ApiService
-  ) {
+  constructor(private fb: FormBuilder, private apiService: ApiService) {
     this.chessForm = this.fb.group({
-      input: ['', Validators.required]
+      input: ['', Validators.required],
     });
   }
 
-  ngOnInit(): void {}
+  onSubmit() {
+    const inputControl = this.chessForm.get('input');
+    inputControl?.markAsTouched();
 
-  async handleButtonClick(): Promise<void> {
-    this.submitted = true;
-    this.output = '';
-    const inputData = this.chessForm.value.input;
+    const inputData = inputControl?.value;
     const separatedInput = separateChessData(inputData);
 
-    if (isChessDataValid(separatedInput, this.setError, this.clearError)) {
-      try {
-        const result = await this.services.getQueenAttackableSquares(separatedInput);
-        this.output = result.data;
-      } catch (error) {
-        console.error('Error:', error);
-      }
+    if (isChessDataValid(separatedInput, this.chessForm)) {
+      this.apiService.getQueenAttackableSquares(separatedInput).subscribe(
+        (result) => {
+          this.output = result.data;
+        },
+        (error) => {
+          console.error('Error fetching data:', error);
+          this.output = 'Error fetching result';
+        }
+      );
     }
-  }
-
-  setError(error: any): void {
-    this.chessForm.controls['input'].setErrors({ customError: error });
-  }
-
-  clearError(): void {
-    this.chessForm.controls['input'].setErrors(null);
   }
 }

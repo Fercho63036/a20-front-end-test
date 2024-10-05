@@ -1,21 +1,16 @@
-<div class="container mt-3">
-  <p class="h4 mb-3">Chess</p>
-  <form [formGroup]="chessForm" (ngSubmit)="handleButtonClick()">
-    <div class="row">
-      <div class="col-12 col-md-6 mb-3">
-        <label for="input" class="form-label">Input:</label>
-        <textarea id="input" class="form-control" formControlName="input" rows="5"></textarea>
-        <div *ngIf="submitted && chessForm.controls['input'].errors?.['required']" class="text-danger mt-1">
-          Input is required
-        </div>
-        <div class="d-flex justify-content-end mt-2">
-          <button type="submit" class="btn btn-primary">Calculate</button>
-        </div>
+<div class="center-container">
+  <div class="card">
+    <p class="h4 mb-3">Chess</p>
+    <form [formGroup]="chessForm" (ngSubmit)="onSubmit()">
+      <app-input-text-area [id]="'1'" [formGroup]="chessForm"></app-input-text-area>
+      <div class="d-flex justify-content-end mt-3">
+        <button type="submit" class="btn btn-primary">
+          Calculate
+        </button>
       </div>
-      <div class="col-12 col-md-6 mb-3">
-        <label for="output" class="form-label">Output:</label>
-        <pre id="output" class="bg-light p-3">{{ output || 'There is no result' }}</pre>
+      <div class="mt-4">
+        <app-show-result [id]="'1'" [data]="output"></app-show-result>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
